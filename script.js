@@ -6,15 +6,18 @@ const generateJoke = () => {
 
   xhr.open('GET', 'https://api.chucknorris.io/jokes/random');
 
-  xhr.onreadystatechange = () => {
+  xhr.onreadystatechange = function() {
     if (this.readyState === 4) {
-      console.log('Working click');
-      console.log(this.responseText);
-      // joke.innerHTML = JSON.parse(this.responText)
-    }
+      if (this.status === 200) {
+        jokeEl.innerHTML = JSON.parse(this.responseText).value;
+      } else {
+        jokeEl.innerHTML = 'Error';
+      }
   };
   xhr.send();
+  }
 }
 
 // Event listeners
 jokeBtn.addEventListener('click', generateJoke);
+document.addEventListener('DOMContentLoaded', generateJoke);
